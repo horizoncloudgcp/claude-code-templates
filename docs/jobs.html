@@ -919,8 +919,8 @@
             const container = document.getElementById('jobs-grid');
             
             if (filteredJobs.length === 0) {
-                const searchText = currentSearchTerm ? ` for "${currentSearchTerm}"` : '';
-                const companyText = currentCompanyFilter !== 'all' ? ` at ${currentCompanyFilter}` : '';
+                const searchText = currentSearchTerm ? ` for "${escapeHtml(currentSearchTerm)}"` : '';
+                const companyText = currentCompanyFilter !== 'all' ? ` at ${escapeHtml(currentCompanyFilter)}` : '';
                 
                 container.innerHTML = `
                     <div class="no-jobs">
@@ -979,6 +979,15 @@
         
         function escapeRegex(string) {
             return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function escapeHtml(string) {
+            return String(string)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
         
         function truncateText(text, maxLength) {

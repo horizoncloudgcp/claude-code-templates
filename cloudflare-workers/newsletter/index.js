@@ -310,7 +310,13 @@ const CLOSERS = [
 ];
 
 function escapeHtml(s) {
-  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  // Quotes too: the result is also used inside href="…" attributes.
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 // Turn bare URLs into anchors (skips trailing punctuation like the ")" in

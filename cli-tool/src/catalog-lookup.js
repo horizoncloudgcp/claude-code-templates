@@ -81,7 +81,14 @@ function levenshtein(a, b) {
 
 /** What was typed, without a file extension, a leading slash or upper case. */
 function normalizeInput(input) {
-  return String(input || '').trim().toLowerCase().replace(/^\/+|\/+$/g, '').replace(/\.(md|json)$/, '');
+  const text = String(input || '').trim().toLowerCase();
+  // Strip leading and trailing slashes with index scans: a `\/+$` regex is
+  // quadratic on input with many slashes.
+  let start = 0;
+  let end = text.length;
+  while (start < end && text[start] === '/') start++;
+  while (end > start && text[end - 1] === '/') end--;
+  return text.slice(start, end).replace(/\.(md|json)$/, '');
 }
 
 /** Up to `limit` close names, nearest first: names that contain each other, then small edit distance. */

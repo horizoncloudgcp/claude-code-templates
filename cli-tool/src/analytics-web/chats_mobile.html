@@ -4188,9 +4188,19 @@
                     return html;
                 }
 
-                // Use regex to find all occurrences (case-insensitive)
+                // Split on the matches (case-insensitive); the capture group keeps them
+                // at the odd indexes. `textContent` is the message's plain text and the
+                // caller assigns the result to innerHTML, so every piece is HTML-escaped.
+                const escapeText = (value) => value
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
                 const regex = new RegExp(`(${this.escapeRegex(searchTerm)})`, 'gi');
-                const newHTML = textContent.replace(regex, '<span class="message-highlight">$1</span>');
+                const newHTML = textContent.split(regex).map((part, i) => (
+                    i % 2 ? `<span class="message-highlight">${escapeText(part)}</span>` : escapeText(part)
+                )).join('');
 
                 return newHTML;
             }

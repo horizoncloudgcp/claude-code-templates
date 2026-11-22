@@ -344,7 +344,7 @@ class WorkflowManager {
                                 <div class="step-type">${agentData.agent.type}</div>
                             </div>
                             <div class="agent-actions">
-                                <button class="agent-action" onclick="showWorkflowComponentDetails('${agentData.agent.type}', '${agentData.agent.name.replace(/'/g, "\\'")}')" title="Details">ℹ️</button>
+                                <button class="agent-action" onclick="showWorkflowComponentDetails('${agentData.agent.type}', '${agentData.agent.name.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}')" title="Details">ℹ️</button>
                                 <button class="agent-action" onclick="removeAgent('${agentData.agent.id}')" title="Remove">🗑️</button>
                             </div>
                         </div>
@@ -360,7 +360,7 @@ class WorkflowManager {
                                 <div class="step-type">${subItem.type}</div>
                             </div>
                             <div class="agent-actions">
-                                <button class="sub-item-action" onclick="showWorkflowComponentDetails('${subItem.type}', '${subItem.name.replace(/'/g, "\\'")}')" title="Details">ℹ️</button>
+                                <button class="sub-item-action" onclick="showWorkflowComponentDetails('${subItem.type}', '${subItem.name.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}')" title="Details">ℹ️</button>
                                 <button class="sub-item-action" onclick="removeSubItem('${agentData.agent.id}', '${subItem.id}')" title="Remove">🗑️</button>
                             </div>
                         </div>
@@ -375,7 +375,7 @@ class WorkflowManager {
                                 <div class="step-type">${agentData.agent.type}</div>
                             </div>
                             <div class="agent-actions">
-                                <button class="agent-action" onclick="showWorkflowComponentDetails('${agentData.agent.type}', '${agentData.agent.name.replace(/'/g, "\\'")}')" title="Details">ℹ️</button>
+                                <button class="agent-action" onclick="showWorkflowComponentDetails('${agentData.agent.type}', '${agentData.agent.name.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}')" title="Details">ℹ️</button>
                                 <button class="agent-action" onclick="removeAgent('${agentData.agent.id}')" title="Remove">🗑️</button>
                             </div>
                         </div>

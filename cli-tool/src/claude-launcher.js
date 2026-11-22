@@ -24,8 +24,11 @@ function claudeLaunchSpec(args, platform = process.platform) {
   }
   const quoted = args.map(arg => {
     // Trailing backslashes would escape the closing quote: double them.
-    const text = String(arg).replace(/"/g, "'").replace(/(\\+)$/, '$1$1');
-    return `"${text}"`;
+    const text = String(arg).replace(/"/g, "'");
+    // Index scan instead of `(\\+)$`, which is quadratic on long backslash runs.
+    let end = text.length;
+    while (end > 0 && text[end - 1] === '\\') end--;
+    return `"${text}${text.slice(end)}"`;
   });
   return { command: 'claude', args: quoted, shell: true };
 }

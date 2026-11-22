@@ -563,11 +563,11 @@ function generateComponentCard(component, category) {
     const config = typeConfig[component.type];
     
     // Escape quotes and special characters for onclick attributes
-    const escapedType = component.type.replace(/'/g, "\\'");
-    const escapedName = (component.name || '').replace(/'/g, "\\'");
-    const escapedPath = (component.path || component.name || '').replace(/'/g, "\\'");
-    const escapedCategory = (component.category || 'general').replace(/'/g, "\\'");
-    const escapedCommand = installCommand.replace(/'/g, "\\'");
+    const escapedType = component.type.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    const escapedName = (component.name || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    const escapedPath = (component.path || component.name || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    const escapedCategory = (component.category || 'general').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    const escapedCommand = installCommand.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
     
     // Create category label (use "General" if no category)
     const categoryName = escapeHTML(component.category || 'general');

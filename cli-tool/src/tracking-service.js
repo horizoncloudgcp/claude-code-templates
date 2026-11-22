@@ -9,6 +9,7 @@
  * Opt out with CCT_NO_TRACKING=true or CCT_NO_ANALYTICS=true (CI=true also disables it).
  */
 
+const crypto = require('crypto');
 const { detectClient } = require('./agent-detection');
 
 class TrackingService {
@@ -179,7 +180,7 @@ class TrackingService {
      * Generate a session ID for grouping related downloads
      */
     generateSessionId() {
-        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        return crypto.randomBytes(12).toString('hex');
     }
 
     /**

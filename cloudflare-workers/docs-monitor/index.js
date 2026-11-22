@@ -154,14 +154,14 @@ function cleanHTML(html) {
   // Remove common dynamic elements
   let clean = html;
 
-  // Remove script tags
-  clean = clean.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+  // Remove script tags (end tags may carry spaces or attributes: "</script >")
+  clean = removeAll(clean, /<script\b[^<]*(?:(?!<\/script\b[^>]*>)<[^<]*)*<\/script\b[^>]*>/gi);
 
   // Remove style tags
-  clean = clean.replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '');
+  clean = removeAll(clean, /<style\b[^<]*(?:(?!<\/style\b[^>]*>)<[^<]*)*<\/style\b[^>]*>/gi);
 
   // Remove comments
-  clean = clean.replace(/<!--[\s\S]*?-->/g, '');
+  clean = removeAll(clean, /<!--[\s\S]*?-->/g);
 
   // Remove common analytics/tracking attributes
   clean = clean.replace(/data-analytics-[^=]*="[^"]*"/gi, '');
@@ -171,6 +171,19 @@ function cleanHTML(html) {
   clean = clean.replace(/\s+/g, ' ').trim();
 
   return clean;
+}
+
+/**
+ * Remove every match of `pattern`, repeating until the text stops changing:
+ * removing one match can join the pieces of another ("<scr<script></script>ipt>").
+ */
+function removeAll(text, pattern) {
+  let previous;
+  do {
+    previous = text;
+    text = text.replace(pattern, '');
+  } while (text !== previous);
+  return text;
 }
 
 /**

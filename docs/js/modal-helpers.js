@@ -171,7 +171,7 @@ function createComponentModalHTML(component) {
                     <button class="add-to-cart-btn" 
                             data-type="${component.type}s" 
                             data-path="${componentPath}"
-                            onclick="handleAddToCart('${component.name.replace(/'/g, "\\'")}', '${componentPath.replace(/'/g, "\\'")}', '${component.type}s', '${component.category ? component.category.replace(/'/g, "\\'") : 'Other'}', this); closeComponentModal();">
+                            onclick="handleAddToCart('${component.name.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}', '${componentPath.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}', '${component.type}s', '${component.category ? component.category.replace(/\\/g, '\\\\').replace(/'/g, "\\'") : 'Other'}', this); closeComponentModal();">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M19,7H18V6A2,2 0 0,0 16,4H8A2,2 0 0,0 6,6V7H5A1,1 0 0,0 4,8A1,1 0 0,0 5,9H6V19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V9H19A1,1 0 0,0 20,8A1,1 0 0,0 19,7M8,6H16V7H8V6M16,19H8V9H16V19Z"/>
                         </svg>

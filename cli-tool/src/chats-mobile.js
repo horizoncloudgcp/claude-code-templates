@@ -401,7 +401,7 @@ class ChatsMobile {
           }
         });
 
-        console.log(`🔍 Search in conversation ${conversationId}:`, {
+        console.log('🔍 Search in conversation %s:', conversationId, {
           query: query,
           messagesWithMatches: matches.length,
           totalOccurrences: matches.reduce((sum, m) => sum + m.matchCount, 0)

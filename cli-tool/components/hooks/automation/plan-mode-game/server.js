@@ -151,6 +151,9 @@ const server = http.createServer((req, res) => {
     }
 
     const ts = payload && payload.t ? new Date(payload.t).toLocaleString() : 'Unknown';
+    // /share signs whatever the client posts, so a score can be any JSON value:
+    // only a number reaches the page.
+    const points = (value) => (Number.isFinite(Number(value)) ? Number(value) : 0);
     const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${valid ? 'Verified' : 'Invalid'} - Plan Mode Game</title><style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#1a1a2e;color:#e5e7eb;font-family:'Courier New',monospace;display:flex;align-items:center;justify-content:center;min-height:100vh}
@@ -175,9 +178,9 @@ tr:last-child td{border-bottom:none}
 <h1 class="${valid ? 'valid' : 'invalid'}">${valid ? 'VERIFIED' : 'INVALID'}</h1>
 <p class="subtitle">${valid ? 'These scores are authentic' : 'This score link has been tampered with'}</p>
 ${valid && payload ? `<table>
-<tr><td class="game">\u{1F995} Dino Runner</td><td class="pts">${payload.d} pts</td></tr>
-<tr><td class="game">\u{1F40D} Snake</td><td class="pts">${payload.s} pts</td></tr>
-<tr><td class="game">\u{1F426} Flappy Bird</td><td class="pts">${payload.f} pts</td></tr>
+<tr><td class="game">\u{1F995} Dino Runner</td><td class="pts">${points(payload.d)} pts</td></tr>
+<tr><td class="game">\u{1F40D} Snake</td><td class="pts">${points(payload.s)} pts</td></tr>
+<tr><td class="game">\u{1F426} Flappy Bird</td><td class="pts">${points(payload.f)} pts</td></tr>
 </table>
 <p class="meta">Shared on ${ts}</p>` : ''}
 <a class="play-link" href="/">Play Plan Mode Game</a>

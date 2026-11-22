@@ -624,7 +624,7 @@ class IndexPageManager {
                         <h3>Installation Command</h3>
                         <div class="command-code-container">
                             <div class="command-code">${plugin.installCommand}</div>
-                            <button class="copy-overlay-btn" onclick="copyToClipboard('${plugin.installCommand.replace(/'/g, "\\'")}'); event.stopPropagation();" title="Copy command">
+                            <button class="copy-overlay-btn" onclick="copyToClipboard('${plugin.installCommand.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'); event.stopPropagation();" title="Copy command">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
                                 </svg>
@@ -721,11 +721,11 @@ class IndexPageManager {
         const config = typeConfig[component.type];
         
         // Escape quotes and special characters for onclick attributes
-        const escapedType = component.type.replace(/'/g, "\\'");
-        const escapedName = (component.name || '').replace(/'/g, "\\'");
-        const escapedPath = (component.path || component.name || '').replace(/'/g, "\\'");
-        const escapedCategory = (component.category || 'general').replace(/'/g, "\\'");
-        const escapedCommand = installCommand.replace(/'/g, "\\'");
+        const escapedType = component.type.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        const escapedName = (component.name || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        const escapedPath = (component.path || component.name || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        const escapedCategory = (component.category || 'general').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        const escapedCommand = installCommand.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
         
         // Create category label (use "General" if no category)
         const categoryName = component.category || 'general';

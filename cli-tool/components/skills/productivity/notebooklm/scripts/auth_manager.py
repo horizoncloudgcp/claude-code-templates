@@ -18,6 +18,7 @@ import re
 import sys
 from pathlib import Path
 from typing import Optional, Dict, Any
+from urllib.parse import urlparse
 
 from patchright.sync_api import sync_playwright, BrowserContext
 
@@ -114,7 +115,7 @@ class AuthManager:
             page.goto("https://notebooklm.google.com", wait_until="domcontentloaded")
 
             # Check if already authenticated
-            if "notebooklm.google.com" in page.url and "accounts.google.com" not in page.url:
+            if urlparse(page.url).hostname == "notebooklm.google.com" and "accounts.google.com" not in page.url:
                 print("  ✅ Already authenticated!")
                 self._save_browser_state(context)
                 return True
@@ -260,7 +261,7 @@ class AuthManager:
             page.goto("https://notebooklm.google.com", wait_until="domcontentloaded", timeout=30000)
 
             # Check if we can access NotebookLM
-            if "notebooklm.google.com" in page.url and "accounts.google.com" not in page.url:
+            if urlparse(page.url).hostname == "notebooklm.google.com" and "accounts.google.com" not in page.url:
                 print("  ✅ Authentication is valid")
                 return True
             else:
