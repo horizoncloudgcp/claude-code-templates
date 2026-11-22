@@ -326,7 +326,7 @@ console.log(`\n${results.length - failed.length}/${results.length} passed agains
 
 if (process.env.GITHUB_STEP_SUMMARY) {
   const { appendFileSync } = await import('node:fs');
-  const rows = results.map((r) => `| ${r.ok ? '✅' : '❌'} | ${r.section} | ${r.name} | ${String(r.detail).replace(/\|/g, '\\|').slice(0, 160)} |`);
+  const rows = results.map((r) => `| ${r.ok ? '✅' : '❌'} | ${r.section} | ${r.name} | ${String(r.detail).replace(/\\/g, '\\\\').replace(/\|/g, '\\|').slice(0, 160)} |`);
   appendFileSync(
     process.env.GITHUB_STEP_SUMMARY,
     `## Production smoke test\n\n${results.length - failed.length}/${results.length} passed against ${base}\n\n| | Area | Check | Detail |\n|---|---|---|---|\n${rows.join('\n')}\n`,

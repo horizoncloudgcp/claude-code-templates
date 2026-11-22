@@ -22,7 +22,8 @@ app.get('/component/:type/:name', (req, res) => {
 // Handle blog routes
 app.get('/blog/*', (req, res) => {
     const blogPath = req.path.replace('/blog', '');
-    res.sendFile(path.join(__dirname, 'docs', 'blog', blogPath, 'index.html'), (err) => {
+    // `root` makes Express refuse any request path that resolves outside docs/blog.
+    res.sendFile(path.join(blogPath, 'index.html'), { root: path.join(__dirname, 'docs', 'blog') }, (err) => {
         if (err) {
             res.status(404).send('Blog post not found');
         }

@@ -19,7 +19,7 @@ if (requestedVersions.length > 1 || (checkOnly && requestedVersions.length > 0))
 
 const requestedVersion = requestedVersions[0];
 const semverPattern =
-  /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-(?:(?:[0-9A-Za-z-]*[A-Za-z-][0-9A-Za-z-]*)|0|[1-9]\d*)(?:\.(?:(?:[0-9A-Za-z-]*[A-Za-z-][0-9A-Za-z-]*)|0|[1-9]\d*))*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/;
+  /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/;
 
 if (requestedVersion && !semverPattern.test(requestedVersion)) {
   fail(`Invalid semantic version: ${requestedVersion}`);
