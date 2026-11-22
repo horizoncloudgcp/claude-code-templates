@@ -126,9 +126,8 @@ class BioRxivSearcher:
         Returns:
             Dictionary with paper details
         """
-        # Clean DOI if full URL was provided
-        if 'doi.org' in doi:
-            doi = doi.split('doi.org/')[-1]
+        # Clean DOI if full URL was provided (a bare DOI comes back unchanged)
+        doi = doi.split('doi.org/')[-1]
 
         self._log(f"Fetching details for DOI: {doi}")
         endpoint = f"details/biorxiv/{doi}"
@@ -239,9 +238,8 @@ class BioRxivSearcher:
         Returns:
             True if download successful, False otherwise
         """
-        # Clean DOI
-        if 'doi.org' in doi:
-            doi = doi.split('doi.org/')[-1]
+        # Clean DOI (a bare DOI comes back unchanged)
+        doi = doi.split('doi.org/')[-1]
 
         # Construct PDF URL
         pdf_url = f"https://www.biorxiv.org/content/{doi}v1.full.pdf"
