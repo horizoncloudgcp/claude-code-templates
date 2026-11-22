@@ -100,5 +100,11 @@
   "devDependencies": {
     "jest": "^30.0.4",
     "jest-watch-typeahead": "^3.0.1"
+  },
+  "overrides": {
+    "glob": "^14.0.6",
+    "test-exclude": {
+      "minimatch": "^11.0.5"
+    }
   }
 }
