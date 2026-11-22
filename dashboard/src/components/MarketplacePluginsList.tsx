@@ -23,11 +23,20 @@ interface Props {
   tagColors: Record<string, string>;
 }
 
+function isGitHubUrl(src: string): boolean {
+  try {
+    const host = new URL(src).hostname.toLowerCase();
+    return host === 'github.com' || host.endsWith('.github.com');
+  } catch {
+    return false;
+  }
+}
+
 function getSourceLabel(p: MarketplacePlugin): 'local' | 'github' {
   const src = p.source ?? '';
   if (typeof src === 'string') {
     if (src.startsWith('./') || src.startsWith('../')) return 'local';
-    if (src.includes('github.com') || src.includes('.git')) return 'github';
+    if (isGitHubUrl(src) || src.includes('.git')) return 'github';
     if (src.includes('/')) return 'github';
   }
   return 'local';
