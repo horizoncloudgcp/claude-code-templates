@@ -16,7 +16,10 @@ const path = require('path');
 function unsafeTarget(dir, { platform = process.platform, env = process.env } = {}) {
   const p = platform === 'win32' ? path.win32 : path.posix;
   const resolved = p.resolve(dir);
-  const trimmed = resolved.length > p.parse(resolved).root.length ? resolved.replace(/[\\/]+$/, '') : resolved;
+  // Index scan instead of `[\\/]+$`, which is quadratic on paths with many separators.
+  let end = resolved.length;
+  while (end > 0 && (resolved[end - 1] === '/' || resolved[end - 1] === '\\')) end--;
+  const trimmed = resolved.length > p.parse(resolved).root.length ? resolved.slice(0, end) : resolved;
 
   if (trimmed === p.parse(trimmed).root) return { reason: 'drive_root', dir: trimmed };
 

@@ -597,7 +597,12 @@ async function installIndividualSetting(settingName, targetDir, options) {
       : null;
     if (settingName.includes('statusline/') || scriptMatch) {
       const pythonFileName = scriptMatch ? scriptMatch[1] : settingName.split('/').pop() + '.py';
-      const pythonUrl = githubUrl.replace(/[^/]+\.json$/, pythonFileName);
+      // Swap the trailing `<name>.json` segment for the script name. Done with
+      // string indexes: `[^/]+\.json$` is quadratic on URLs with many dots.
+      const lastSegment = githubUrl.slice(githubUrl.lastIndexOf('/') + 1);
+      const pythonUrl = lastSegment.length > '.json'.length && lastSegment.endsWith('.json')
+        ? githubUrl.slice(0, githubUrl.length - lastSegment.length) + pythonFileName
+        : githubUrl;
       
       try {
         console.log(chalk.gray(`📥 Downloading Python script: ${pythonFileName}...`));

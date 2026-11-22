@@ -279,7 +279,15 @@ function createInstallUI({ version, targetDir }) {
       detail = describeWrites(files, targetDir) || 'done';
     } else {
       const errorLine = thrown ? thrown.message : [...captured].reverse().find(l => /❌|error|could not|failed/i.test(l));
-      detail = errorLine ? errorLine.replace(/^[^\w"]*/, '').replace(/^(.*[^(]*)\)$/, (m, inner) => (inner.includes('(') ? m : inner)).trim() : 'failed';
+      if (errorLine) {
+        // Drop a trailing ")" that has no "(" before it. Plain string checks:
+        // the regex this replaces was quadratic on long lines.
+        const text = errorLine.replace(/^[^\w"]*/, '');
+        const unbalanced = text.endsWith(')') && !text.slice(0, -1).includes('(');
+        detail = (unbalanced ? text.slice(0, -1) : text).trim();
+      } else {
+        detail = 'failed';
+      }
     }
 
     if (interactive) {
